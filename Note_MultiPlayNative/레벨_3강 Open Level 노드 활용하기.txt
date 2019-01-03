@@ -1,0 +1,4 @@
+1. 레벨이동은 UKismetSystemLibrary::ExecuteConsoleCommand 함수를 이용해서 직접 콘솔 명령어를 입력해서 처리할수 있다.
+  - 하지만 실 게임에서 콘솔명령어를 넣는건 아주 않좋은 방식이므로 테스트 목적이외에는 사용하지 말것(애시당초 테스트할거면 걍 틸트키로 콘솔띄우는게 낫다..)
+
+2. 게임에서 사용가능한 레벨이동은 UGameplayStatics::OpenLevel()함수를 이용해서 처리

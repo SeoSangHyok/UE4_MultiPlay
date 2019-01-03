@@ -1,0 +1,15 @@
+1. 게임 실행중 추가적인 exe파일 실행이 필요한경우 아래의 로직으로 실행중인 어플리케이션의 경로를 얻어올수 있다.
+   TCHAR FIlePath[MAX_PATH] = { 0, };
+   GetModuleFileName(nullptr, FIlePath, MAX_PATH);
+
+2. 언리얼스크립트의 경우 c++기반이기때문에 c 기반 함수들도 모두 사용할 수 있으니 참고
+
+3. 추가적으로 FPaths 클래스의 함수를 이용해서 경로 처리를 하는것도 가능하니 참고. 관련 링크 남겨둔다.
+   https://stackoverflow.com/questions/40918561/getting-path-of-the-executable-in-current-folder-c
+   https://answers.unrealengine.com/questions/580005/getting-full-path-of-project-directory.html#answer-675937
+
+4. 위에서 얻어온 exe파일경로는 FPlatformProcess::CreateProc 함수로 실행가능하다.
+   https://answers.unrealengine.com/questions/415528/is-there-a-way-to-execute-external-exe-files-from.html
+
+5. 실행시 넘어온 인자값을 넘길수도 있으며 넘어온 인자값의 확인은 FCommandLine::Get() 함수로 가능
+   https://answers.unrealengine.com/questions/355258/how-to-get-command-line-parameters-in-c.html

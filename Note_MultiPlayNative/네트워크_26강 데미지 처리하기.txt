@@ -1,0 +1,47 @@
+1. 언리얼에서 데미지 처리같은 중요한 로직은 무조건 서버에서 처리한다.
+
+2. 그런처리는 서버에서만 처리할 수 있도록 AActor::HasAuthority 함수를 활용해서 서버에서처리하게끔 한다.
+
+3. 서버에서 변경되는 변수값은 PRC(Client 프로퍼티 옵션)를 이용해서 처리할수도 있고 변수 리프리케이트 옵션을 이용해서 처리해도 된다.
+
+4. 엑터의 리플리케이트 옵션은 켠다고 해서 엑터의 맴버변수들까지도 리플리케이트 되는것은 아니다!!
+  - 엑터의 맴버변수를 리플리케이트 해서 서버와 동기화 시키고자 할경우 BP의 경우 해당 맴버 변수의 리플리케이션값을 Replicated로 세팅하면 끝.
+  - 네이티브의 경우 몇가지 처리가 필요.
+    -- 맴버변수의 UPROPERTY( ) 메크로에 replicated 를 세팅.( UPROPERTY( replicated ) )
+    -- 액터 클래스 구현에서, GetLifetimeReplicatedProps 함수를 구현
+      void AActor::GetLifetimeReplicatedProps( TArray< FLifetimeProperty > & OutLifetimeProps ) const
+      {
+         Super::GetLifetimeReplicatedProps( OutLifetimeProps );
+
+         DOREPLIFETIME( [엑터클래스], [맴버변수]] );
+      }
+    -- 당연히 BP건 네이티브건 엑터자체의 리플리케이트 옵션은 켜져있어야한다!
+
+5. 맴버변수의 리플리케이트의 경우 당연히 서버->클라 방향으로만 동기화가 된다. 즉 클라에서 리플리케이트된 맴버변수를 바꾼다고 서버의 값이 변하지 않는다!!!
+  - 클라에서 서버의 값을 바꾸고 싶은경우 RPC계열의 함수를 이용해야함. (Server 가 붙은 UFUNCTION 함수들..)
+
+6. 맴버변수의 리플리케이트는 자동으로 되지만 서버에서 특정함수를 호출한것은 클라로 전파가 되지 않는다(당연..) 해당 처리를 하려면 RPC계열 함수를 이용해야함
+
+7. 리플리케이트 되는 맴버변수의 경우 네트워크컬링 디스턴스로 인해 컬링되었다가 다시 등장할때 동기화의 문제가 발생할수 있다.
+  - 특정 맴버변수가 변했을때 무슨 처리를 한다면 나중에 다시 생성되었을때는 이미 맴버변수 값이 변경된 상태이기때문에 해당 처리가 미반영된다.
+
+8. 다행이 리플리케이트되는 맴버변수가 값이 변경되었을때 노티파이함수를 설정 / 콜할수 있는 방법이 있다.
+  - BP의 경우
+    -- 리플리케이트할 맴버변수의 리플리케이트 옵션을 Replicated 가 아닌 RepNotify로 세팅
+    -- OnRep_[맴버변수명] 함수가 자동으로 생성
+    -- 해당 함수에 맴버값에 따른 처리를 진행
+
+  - 네이티브의 경우
+    -- 리플리케이트할 맴버변수의 UPROPERTY 옵션을 Replicated 가 아닌 ReplicatedUsing=[호출한 노티파이 함수명] 으로 세팅( UPROPERTY(ReplicatedUsing=[호출한 노티파이 함수명]) )
+    -- 노티파이 함수를 정의(당연 UFUNCTION 이 붙어야함)
+    -- 해당 함수에 맴버값에 따른 처리를 진행
+
+9. 네이티브의 ReplicatedUsing 옵션을 사용할경우 접속중인 클라이언트에는 노티파이 함수가 자동으로 호출되지만 서버의 경우 노티파이 함수가 자동으로 호출되지 않는다.
+   서버에서도 노티파이 함수를 처리해야하는 경우 변수값을 수정후 HasAuthority()등의 서버확인 함수를 이용해서 서버여부를 파악하고 자체적으로 노티파이함수를 호출한다.
+
+10. 리플리케이트 처리를 위해 GetLifetimeReplicatedProps 오버라이딩시 반드시 부모의 GetLifetimeReplicatedProps 함수를 호출한다.(Super::GetLifetimeReplicatedProps)
+    그렇지 않으면 해당 엑터의 리플리케이트자체가 먹통이 되니 주의!!
+
+11. 참고 사이트
+  https://www.unrealengine.com/ko/blog/network-tips-and-tricks?sessionInvalidated=true
+  https://wiki.unrealengine.com/Replication

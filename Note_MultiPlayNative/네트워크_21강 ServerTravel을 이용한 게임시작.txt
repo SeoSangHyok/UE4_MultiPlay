@@ -1,0 +1,10 @@
+1. 서버트라벨(Server Travel)이란 현재 서버를 다른 맵으로 이동시키는 것을 말한다.
+
+2. 서버 호스트가 단순히 openlevel을 사용해서 레벨을 이동하면 해당 서버에 접속하고 있는 모든 클라이언트는 강제로 로그아웃되어버린다.
+
+3. 따라서 접속해있는 클라이언트들을 같이 레벨이동을 시키려면 ServerTravel 기능을 활용할 필요가 있다.
+
+4. 사용은 UWorld::ServerTravel 함수를 사용하면 된다.
+
+5. 관련 자료 링크 남겨둔다.
+  - http://api.unrealengine.com/KOR/Gameplay/Networking/Travelling/

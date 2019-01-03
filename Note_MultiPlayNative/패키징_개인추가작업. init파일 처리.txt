@@ -1,0 +1,22 @@
+1. 클래스 변수의 기본값(IP주소같은)의 경우 ini에서 가져오는것이 가능하다. 사용법에 대해 링크남겨둔다.
+   요약하자면 ini파일을 사용할 클래스 메크로(UCLASS)에 사용할 ini파일을 지정하고(UCLASS(config=[사용할ini파일])) ini에서 읽어올 변수의 UPROPERTY에 config 처리를 해주면 끝.
+   여기서 언리얼의 경우 기본으로 사용할수 있는 ini가 정해져있으니 유의할것!(문서참고)
+   - http://api.unrealengine.com/KOR/Programming/Basics/ConfigurationFiles/index.html
+   - https://wiki.unrealengine.com/Config_Files,_Read_%26_Write_to_Config_Files
+   - https://forums.unrealengine.com/development-discussion/c-gameplay-programming/69127-set-actor-s-truct-uproperty-config-from-ini
+
+2. 언리얼 기본ini가 아닌 사용자가 직접 생성한 ini를 이용할 수도 있는데 이경우 아래와 같이 ini파일을 직접 읽어줘야한다. 언리얼 제공함수가 아닌 window함수를 쓰는것이 포인트
+
+  wchar_t Buffer[128] = { 0, };
+  GetPrivateProfileString(*Category, *Key, TEXT(""), Buffer, 128, *IniPath);
+  // 이후 읽어온값을 사용자 입맛에 맞게 조작해서 사용
+
+3. 외부 파일을 읽어올때 경로를 찾는것에 대해 직접 GetModuleFileName 윈도우 api를 써서 처리할수도 있겠지만 언리얼의 FPaths 함수를 사용해도 유용하다.
+  - http://api.unrealengine.com/INT/API/Runtime/Core/Misc/FPaths/
+  - 주로 사용되는것을 보자면
+    - FPaths::LaunchDir(); // 실행exe가 있는 위치
+    - FPaths::ProjectDir(); // 프로젝트 파일. 즉 uproject 파일이 있는 위치
+      => 프로젝트를 패키징하면 실행파일의 하위폴더에 프로젝트 폴더가 생기고 해당 경로를 가리키니 참고
+    - FPaths::ProjectContentDir(); // 프로젝트 폴더의 content폴더 위치
+
+4. 멀티플렛폼을 고려한다면 가급적 엔진에서 제공하는 ini리더를 이용하자

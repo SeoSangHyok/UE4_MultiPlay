@@ -1,0 +1,5 @@
+1. 액터의 물리처리를 위해서는 충돌 컴포넌트(sphere, Cube, cylinder 컴포넌트같은)의 SetSimulatePhysics 옵션을 켜준다.
+
+2. 추가로 PhyscisaActor 콜리전 프로파일을 사용하는것처럼 물리타입의 충돌이 가능하도록 충돌 세팅을 할 필요가 있다.
+
+3. Movement component는 캐릭터 이동뿐만 아니라 발사체의 이동을 처리하는 ProjectileMovementComponent도 있으니 참고

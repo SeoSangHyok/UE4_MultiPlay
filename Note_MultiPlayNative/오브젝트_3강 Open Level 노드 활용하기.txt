@@ -1,0 +1,4 @@
+1. 네이티브 엑터 클래스 정의시 생성자에 오브젝트를 처리하는 방법으로 ConstructorHelpers::FObjectFinder 를 이용하는 방법이 있으니 참고
+   동작방식으로 봐선 FSoftObjectPath와 다르게 강 레퍼런스로 동작하는듯 보인다. api링크 남겨둔다.
+   - https://api.unrealengine.com/INT/API/Runtime/CoreUObject/UObject/ConstructorHelpers/index.html
+   - FSoftObjectPath를 이용한 약 레퍼런스를 이용하는 방법도 잘 동작하는듯 보인다.

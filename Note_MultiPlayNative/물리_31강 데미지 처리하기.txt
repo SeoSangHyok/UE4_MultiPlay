@@ -1,0 +1,44 @@
+1. 액터의 block 이벤트 처리를 위해선...
+  - 액터의 컴포넌트의 콜리전 세팅, 즉 어떤 오브젝트와 블록반응을 하는지 여부와
+  - Simulation Generates Hit Events 설정이 켜져있는지 확인할것 네이티브의 경우 해당 컴포넌트의 SetNotifyRigidBodyCollision()함수로 세팅해야한다.
+
+2. block hit 이벤트 처리는 네이티브에선 AActor::NotifyHit 함수로. BP에선 ReceiveHit(hit 이벤트) 로 받아서 처리하면된다.
+
+3. 추가적으로 AActor::OnActorHit 델리게이트에 바인딩 처리를해도 hit이벤트 처리가 가능하니 참고할것
+
+4. 언리얼 트래이싱 처리를 할때 가장 햇깔리는 부분이 콜리전과 트레이스다. BP에서는 다소 이해하기 쉽지만 c++에선 상당히 난해하다.;; 이전에 정리한 내용 밑에 남겨둔다.
+  - http://blog.daum.net/peace-day/?t__nil_login=myblog
+
+5. 네이티브에서 콜리전 채널 처리방법중 따로 정의 파일을 만들어서 직접 define해주는 방법이 있다.
+   #define [트래이스채널1] = ECollisionChannel::ECC_GameTraceChannel1;
+   #define [오브젝트채널1] = ECollisionChannel::ECC_GameTraceChannel2;
+   #define [트래이스채널2] = ECollisionChannel::ECC_GameTraceChannel3;
+   ...
+   이런식으로
+
+6. 하지만 UCollisionProfile클래스를 이용해서 프로젝트 세팅에서 정의한 채널이름으로 직접 접근하는것도 가능하다.
+  const UCollisionProfile* CollisionProfile = UCollisionProfile::Get();
+  if (IsValid(CollisionProfile))
+  {
+    FName testChanelName = TEXT("Camera");
+    int CollisionIndex = INDEX_NONE;
+    for (int i=0 ; i<ECollisionChannel::ECC_MAX ; i++)
+    {
+      FName CheckCollisionName = CollisionProfile->ReturnChannelNameFromContainerIndex(i);
+      if (CheckCollisionName == TEXT("Camera"))
+      {
+        CollisionIndex = i;
+        break;
+      }
+    }
+
+    TEnumAsByte<ECollisionChannel> CollisionChannelAsByte(CollisionIndex);
+    ETraceTypeQuery TraceTypeQuery = CollisionProfile->ConvertToTraceType(CollisionChannelAsByte.GetValue());
+    ...
+    이런식으로
+
+  7. 둘다 나쁜방법은 아니지만 개인적으론 6.번 방법이 좀더 나은거 같다.
+
+  8. 트래이싱 처리시 액터의 각 컴포넌트들에 설정된 컬리전 타입에 유의할 필요가 있다.
+
+  9. 스켈탈 메시의 부위 판정을 위해선 스켈레탈 메시의 스켈레탈에 피직스 바디가 설정되어 있어야 한다.

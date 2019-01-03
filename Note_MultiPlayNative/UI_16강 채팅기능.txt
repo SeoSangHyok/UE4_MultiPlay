@@ -1,0 +1,3 @@
+1. UEditableTextBox::OnTextCommitted 이벤트는 텍스트입력 박스에 먼가 입력처리가되면 발생하는 이벤트
+
+2. UEditableTextBox::OnTextCommitted 이벤트가 발생하면 기본적으로 포커싱이 없어진다. 이는 UEditableTextBox::ClearKeyboardFocusOnCommit 을 false로 두면 계속해서 포커싱이 유지된다.

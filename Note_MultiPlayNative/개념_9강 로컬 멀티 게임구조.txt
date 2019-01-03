@@ -1,0 +1,15 @@
+1. 화면하나를 분할해서 한 머신(콘솔,PC)에서 다수의 플레이어 컨트롤러를 가질수 있다.(마리오 카트같은걸 생각하면 이해하기 쉽다.)
+  - 이를 로컬 멀티플레이어 게임이라고 함
+
+2. PlayerController는 생성시 0부터 시작하는 인덱스를 부여받는데 있는데 다수의 PlayerController가 있을경우 해당 인덱스로 특정 플레이어 컨트롤러를 가져오는것이 가능
+
+3. 도식화 하자면...
+  Level - GM - PC(0)
+             - PC(1)
+             - ...
+
+4. 로컬 멀티플레이어 게임제작 관련자료가 있어 링크 남겨둔다.
+  - https://www.youtube.com/watch?v=ZOc9fV6Sap4
+  - https://wiki.unrealengine.com/Local_Multiplayer_Tips
+  - https://www.youtube.com/watch?v=eMfFKFpiFlY
+  - https://www.youtube.com/watch?v=o1I89T3dr_g

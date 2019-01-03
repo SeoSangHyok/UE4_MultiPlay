@@ -1,0 +1,28 @@
+1. 구버전의 경우 패키징을 했을때 일부 맵들이 패키징안되는 현상이 발생하는 경우가 있음
+
+2. 패키징시 레벨이동이 안되는경우 해당 레벨이 패키징에 포함되지 않은경우. 해결법은
+  - [프로젝트세팅]-[패키징]-[Packaging]에서 Cook everything in the project content directory 항목을 체크
+    -- 이렇게 하면 contents 폴더의 모든것이 패키징이된다. 물론 필요하지 않은 에셋(테스트용 에셋같은..)까지 몽땅 패키징된다.
+  - List of maps to include in a package build 항목에 패키징할 맵을 일일히 지정
+    -- 다소 번거롭지만 패키징되는 맵들을 직접 선택가능
+
+3. 개발중에는 Cook everything in the project content directory 를 켜고 빌드 쉽핑시에는 해당 옵션을 끄고 패키지에 포함할 맵리스트를 직접 넣어주는것이 좋다.
+
+4. 패키징시 [패키징]-[Packaging]에서 Use Pak File 항목이 체크되어 있지 않으면 패킹파일이 아닌 에셋파일이 그대로 들어간다. 패키징시 에셋들이 잘 들어갔는지 확인하는데 좋으니 참고
+
+5. 에디터에서 패키징하는것과 동일한 작업을 커맨드라인 명령어를 통해서도 할수 있다. 빌드머신같은 시스템을 구축할때 유용.
+  - cmd 실행
+  - [언리얼 설치폴더]\Engine\Build\BatchFiles 로 이동
+  - RunUAT.bat [커맨드라인] 으로 패키징 실행
+  - 에디터에서 패키징시 들어오는 커맨드라인은 [프로젝트세팅]-[패키징] 에 세팅된 값에 따라 다르게 들어온다. 에디터에서 패키징시 출력창에 명령어가 나오니 해당 명령어를 참고하면 좋을듯..
+  - 커맨드라인 예시
+    -ScriptsForProject="[패키징할 언리얼 .uproject의 전채 경로]" BuildCookRun -nocompileeditor -nop4 -project="[패키징할 언리얼 .uproject의 전채 경로]" -cook -stage -archive -archivedirectory="[패키징 결과가 저장될 폴더경로]" -package -clientconfig=Development -ue4exe=UE4Editor-Cmd.exe -clean -pak -prereqs -targetplatform=Win64 -build -utf8output -compile
+  - 즉 RunUAT.bat -ScriptsForProject="[패키징할 언리얼 .uproject의 전채 경로]" BuildCookRun -nocompileeditor -nop4 -project="[패키징할 언리얼 .uproject의 전채 경로]" -cook -stage -archive -archivedirectory="[패키징 결과가 저장될 폴더경로]" -package -clientconfig=Development -ue4exe=UE4Editor-Cmd.exe -clean -pak -prereqs -targetplatform=Win64 -build -utf8output -compile
+    명령 실행으로 에디터에서 패키징하는것과 동일한 결과를 얻을수 있다.
+
+6. 관련 링크 남겨두니 참고
+  - http://api.unrealengine.com/KOR/Engine/Basics/Projects/Packaging/index.html
+  - https://pkisensee.wordpress.com/2015/02/17/package-perfect/
+  - https://wiki.unrealengine.com/How_to_package_your_game_with_commands
+  - https://forums.unrealengine.com/community/community-content-tools-and-tutorials/85047-the-art-of-packaging-shipping-builds-in-unreal-engine-4
+  - https://replay.unrealsummit.co.kr/data/summit2015/2015_02.pdf

@@ -1,0 +1,6 @@
+1. 델리게이트를 사용하면 특정 이벤트 발생시 해당 이벤트가 필요한 객체들에게 알림을 보낼수 있다.(아주 편리한 기능)
+
+2. 사용은 아래 링크를 참조하는게 더 나을듯
+   http://api.unrealengine.com/KOR/Programming/UnrealArchitecture/Delegates/
+   http://api.unrealengine.com/KOR/Programming/UnrealArchitecture/Delegates/Multicast/
+   https://wiki.unrealengine.com/Delegates_In_UE4,_Raw_Cpp_and_BP_Exposed

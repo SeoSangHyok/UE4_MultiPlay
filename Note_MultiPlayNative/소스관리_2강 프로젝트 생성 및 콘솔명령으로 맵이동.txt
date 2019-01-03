@@ -1,0 +1,2 @@
+1. git으로 소스관리할때 용량이 큰 파일이나 파일형식은 git lfs로 효율적인처리를 할 수있다. 사용법 링크 남겨두니 참고
+  - https://devlog.github.io/git-lfs/2015/12/09/git-lfs.html

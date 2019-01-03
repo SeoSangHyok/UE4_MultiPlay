@@ -1,0 +1,6 @@
+1. 게임도중 폰을 생성하고 PC를 빙의(Possess)시킴으로써 케릭터 변경및 리스폰이 가능함
+
+2. AGameModeBase::RestartPlayer 함수에 기본적인 리스폰기능이 구현되어 있으며 바로 사용도 가능
+
+3. BP의 경우 AGameModeBase::ChoosePlayerStart제정의가 가능해서 쉽게 리스트를 뽑는게 가능하지만 해당 함수의 _Implementation 함수가 virtual이 아닌관계로 시작지점 무작위 처리를 하기위해선
+   부득이 하게 AGameModeBase::RestartPlayer 함수를 제정의해서 처리해야한다.

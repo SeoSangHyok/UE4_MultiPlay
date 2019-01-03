@@ -1,0 +1,1 @@
+1. 위젯에서 PlayerController나 GameInstance를 가져올때는 주의해야한다. 에디터에서 작업시 위젯을 플레이어 컨트롤러는 nullptr이기때문에 그냥 막 가져다 쓰면 크래시가 발생한다.

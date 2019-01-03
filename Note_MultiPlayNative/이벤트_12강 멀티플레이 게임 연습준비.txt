@@ -1,0 +1,9 @@
+1. UInputComponent::BindKey / BindAction함수의 경우 각 바인드당 하나의 함수가 필요하다. 직관성면에선 좋으나 추가되는 액션이 동일한 로직을 사용할경우 불필요하게 코드가 길어지는 단점이 있다.
+
+2. 이경우 UInputComponent::AddActionBinding 함수를 이용해서 각 액션 처리를 하나의 함수에서 모두 처리가능하니 참고
+
+3. 물론 UInputComponent::BindKey / BindAction함수가 나쁜것을 절대로 아니니 상황에 따라 적절한것을 사용해주면 된다.
+
+4. UInputComponent::AddActionBinding의 경우 FKey값이 넘어오는데 넘어온 FKey값을 Action으로 변경해주는 루틴을 만드는작업이 필요할 수 있다.
+
+5. 추가적으로 UInputComponent::AddActionBinding은 FKey값많이 넘어오기때문에 Shift키나 Ctrl키같은 입력을 같이 받는 액션의 경우 처리가 까다로울것으로 예상

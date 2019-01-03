@@ -1,0 +1,31 @@
+1. 네이티브 세션처리 관련된 링크 남겨둔다.
+  https://wiki.unrealengine.com/How_To_Use_Sessions_In_C%2B%2B
+  http://api.unrealengine.com/KOR/Programming/Online/index.html
+  http://api.unrealengine.com/KOR/Programming/Online/Interfaces/Session/
+  https://forums.unrealengine.com/community/community-content-tools-and-tutorials/41043-advanced-sessions-plugin?69901-Advanced-Sessions-Plugin=
+  https://lunarrooster.com/2016/05/17/c-networking-in-ue4/
+
+2. 언리얼에서 제공하는 세션서비스는 host에기반한 처리를 하고있다. 즉 데디서버의 경우 세션처리가 어려운상황
+
+3. 데디서버에서 요청시 데디서버 세션서비스를(쉽게 서버에 방생성 요청시 데디서버기반의 방을 생성하는)처리하는 방법은 직접 데디서버 인스턴스(실행파일)을 실행하는수밖에 없다.
+
+4. 즉 로비서버에서 데디서버 exe를 실행하고 접속요청/방생성 요청이 온 클라를 직접 실행된 데디서버 인스턴스로 이동시키는 방법뿐
+
+5. 이와같이 처리되면 로비서버는 마스터 서버의 성격을 띄게된다.
+
+6. 위 내용 관련 내용 링크 남겨둔다.
+  https://cafe.naver.com/unrealenginekr/22080
+  https://answers.unrealengine.com/questions/375084/one-dedicated-server-multiple-game-sessions.html
+  https://www.reddit.com/r/unrealengine/comments/53b541/questionccan_i_run_sessions_on_one_dedicated/
+
+7. 로비서버와 따로 실행된 데디서버 인스턴스와의 통신은 직접 소켓을 뚫어서 처리해야한다. 관련 내용 링크 남겨둔다.
+  https://answers.unrealengine.com/questions/572936/i-need-to-connect-to-server-via-tcp.html
+
+8. 소켓 통신 테스트에 쓸만한 유틸리티가 있어서 링크 남겨둔다.
+  https://packetsender.com/documentation
+
+
+http://nini01.tistory.com/59
+https://answers.unrealengine.com/questions/355235/get-port-in-game-when-launch-dedicated-server.html
+https://wiki.unrealengine.com/Multi-Threading:_How_to_Create_Threads_in_UE4
+https://wiki.unrealengine.com/Third_Party_Socket_Server_Connection

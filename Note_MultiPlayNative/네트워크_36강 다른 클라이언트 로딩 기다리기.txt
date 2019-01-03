@@ -1,0 +1,21 @@
+1. UWorld::ServerTravel 함수를 이용해서 서버트라벨 시 옵션값을 넣어줄수 있다.
+  - 사용은 UWorld::ServerTravel( [맵이름]?옵션1=옵션1값?옵션2=옵션2값... ) 옵션간의 분리는 ? 를 이용한다.
+
+2. 인자로 넘긴 옵션값은 UGameplayStatics::GetIntOption/ParseOption 등과같은 함수로 파싱해서 가져올수 있다.
+
+4. GameMode의 PostLogin(BP의 경우 OnPostLogin), Logout(BP의 경우 OnLogout)함수에서 플레이어의 로그인 로그아웃 처리를 할 수 있다. 해당 함수를 오버라이딩해서 사용
+
+5. 네이티브에서및 BP에서 타이머 생성이 가능하며 타이머에서 클래스 함수를 직접 바인딩 할수도 있지만 람다식으로 만들면 1회성 타이머같은 임시성 타이머를 사용할때 가독성 측면에서 상당히 도움이 된다.
+   FTimerDelegate 를 사용해서 처리하면 되며 아래 예시처럼 처리가능하니 참고
+
+   FTimerDelegate TimerCallback;
+   TimerCallback.BindLambda([]
+   {
+     /*할일*/
+   });
+
+   FTimerHandle TimerHandle;
+   GetWorldTimerManager().SetTimer(TimerHandle, TimerCallback, 5.0f, false);
+
+   참조링크 남겨둔다.
+   https://forums.unrealengine.com/development-discussion/c-gameplay-programming/41762-can-i-use-lambda-with-timers

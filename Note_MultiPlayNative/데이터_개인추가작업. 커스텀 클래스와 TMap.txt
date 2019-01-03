@@ -1,0 +1,14 @@
+1. stl::map과 마찬가지로 언리얼의 TMap도 사용자 커스텀 구조체를 키값으로 사용가능하다. 몇몇 연산자 오버로딩이 필요.
+
+2. stl과 는 다르게 몇가지 연산자 오버로딩과 friend 처리가 필요하다. 아래 링크 참고
+  - https://forums.unrealengine.com/development-discussion/c-gameplay-programming/55462-tmap-with-struct
+
+3. 언리얼 델리게이트 이외에 함수포인터도 처리가 가능하다. 아래 링크참조
+  - https://wiki.unrealengine.com/Function_Pointers
+
+4. 패킷 처리시 해더를 이용해서 처리 영역을 잡는 경우가 많은데 이때 switch나 if보단 헤더 구조체를 키값으로 하는 함수포인터맵을 사용한다면
+   분기처리에 드는 시간을 많이 줄일 수 있다.
+   예) TMap<[패킷해더 구조체], [사용할 함수 포인터]>
+
+5. 참고로 std::map의 구조체 키값을 사용하기위한 자료링크 남겨둔다.
+  - https://www.experts-exchange.com/questions/28072533/map-having-key-as-struct.html

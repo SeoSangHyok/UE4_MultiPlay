@@ -1,0 +1,7 @@
+1. 네트워크를 이용해서 게임 게발할때 사용자 강퇴(Kick/Ban)처리는 아래 두가지로 할수 있다.
+  - 데디케이트 서버를 이용한 처리를 하는경우 강퇴처리할 플레이어 컨트롤러를 지워주면(Destory) 끝
+  - 세션서비스를 이용한 호스트 처리를 하는경우 AGameSession::KickPlayer 함수를 사용한다.
+
+2. 관련 링크 남겨둔다.
+  - https://answers.unrealengine.com/questions/163468/possible-to-kick-players-andor-set-player-limit.html
+  - http://api.unrealengine.com/INT/API/Runtime/Engine/GameFramework/AGameSession/KickPlayer/index.html

@@ -1,0 +1,21 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{76AA704E-4765-944A-B054-CBBBD5C6B8ED}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "MultiplayNative",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"UMG",
+				"CoreUObject"
+			]
+		}
+	],
+	"TargetPlatforms": [
+		"WindowsNoEditor"
+	]
+}

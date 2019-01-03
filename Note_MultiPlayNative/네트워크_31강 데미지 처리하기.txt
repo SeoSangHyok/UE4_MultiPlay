@@ -1,0 +1,35 @@
+1. 당연한내용이지만 충돌처리할때 충돌엑터를 캐스팅해서 해당 액터의 맴버에 직접 접근하는건 아~주 좋지 못한 방법
+  - 함수를 만들서 호출하는 것이 일반적
+
+2. 언리얼은 데미지 처리를 위해 UGameplayStatics::ApplyDamage함수를 제공한다.
+  - Damaged Actor : 데미지를 받을 액터
+  - Base damage : 데미지양
+  - Event Instigator : 해당 데미지를 입힌 원인 으로 봐야하나??
+  - Damage Causer : 직접적으로 데미지르 입힌 액터
+
+3. Event Instigator와 Damage Causer 간의 관계가 햇갈리는데 이리생각하면 된다.
+  - Damage Causer 가 총이나 수류탄. 즉 다른 플레이어에게 직접 피해를 입힌 액터라고 한다면 Event Instigator는 그 총이나 수류탄을 사용한 플레이어 라고 보면된다.
+
+4. UGameplayStatics::ApplyDamage함수를 사용하면 Damaged Actor 인스턴스에
+  - 네이티브의 경우 TakeDamage 함수가 호출. 해당 함수에서 데미지 처리를 하면된다.
+  - BP의 경우 AnyDamage 이벤트가 호출된다.
+
+5. UGameplayStatics::ApplyDamage 함수 호출시 데미지가 0이면 TakeDamage/AnyDamage 가 호출되지 않으니 참고
+
+6. UGameplayStatics::ApplyDamage 함수는 블루프린트의 경우 서버에서만 실행된다. 하지만 네이티브의 경우 서버 클라 양쪽다 실행되기때문에 HasAuthority 처리후 사용해야한다.
+
+7. 변수 리플리케이트 노티파이함수를 이용하는경우 유의할점이 있다.
+  - 변수 리플케이트 노티파이함수는 리플리케이트되는 변수가 서버에선 변경된 값과 동일한경우 호출되지 않는다.
+    (예를들어 HP를 클라에서 임의로 50으로 변경후 서버에서 50으로 처리하면 노티파이되지 않는다.)
+  - 비슷한 이유인거 같은데 이때문에 서버에선 노티파이 함수가 호출되지 않는다.
+  - 그러므로 클라에서는 변수값을 바꿀때 리플리케이트 되는 변수인지 확인하고 맞다면 그에 상응하는 처리를 해야한다.
+    ( 걍 리플리케이트되는 변수는 테스트이외에는 건들이지 않는게 낫다 )
+  - 서버에서는 리플리케이트 되는 변수 수정후 필요하다면 노티파이에서 처리하는 로직을 추가로 한다.
+
+8. 언리얼 내장 데미지 처리 함수인 UGameplayStatics::ApplyRadialDamage 는 특정 지점을 기준으로 하는 구체를 생성, 해당 구에 들어와있는 엑터들에게 데미지를 입힌다.
+  - 동작 및 특이사항은 ApplyDamage와 같고 데미지 처리를 위해 지점과 반지름이 주어지는것만 다르니 직접 사용해볼것
+  - ApplyRadialDamage사용시 네이티브는 모두 TakeDamage로처리가 들어오나 BP의 경우 Radialdamage이벤트가 온다 BP에서 만약 AnyDamage와 Radialdamage이벤트를 둘다 지정한경우
+    이벤트가 두번 다 들어오기때문에 주의해야한다.
+
+9. 언리얼 내장 데미지 처리 함수인 UGameplayStatics::ApplyPointDamage 함수는 동작은 ApplyDamage 와 같으나 넘길때 FHitResult인자와 데미지방향 정보를 추가로 보낼수 있다.
+   물론 추가정보는 사용자가 직접 넘겨야 한다.

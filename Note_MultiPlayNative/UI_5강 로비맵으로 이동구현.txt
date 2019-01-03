@@ -1,0 +1,12 @@
+1. 위젯생성후 마우스 커서가 보이지 않으면 APlayerController::bShowMouseCursor 값을 true로 처리하자.
+
+2. 위젯역시 포커싱을 가질수 있기때문에 포커싱처리가 되지 않는현상(예를들어 버튼을 두번클릭해야 동작하는현상(포커싱후 클릭처리가 되는것))을 방지하지위해선 위젯에 포커싱을 주는작업이 필요
+  - UWidgetBlueprintLibrary::SetInputMode_UIOnlyEx 함수를 이용하자.
+  - 4.19 기준 뒤에 Ex붙은 함수를 사용하는것을 권장.... 아니 Ex붙은걸 사용하자 DEPRECATED 붙은함수는 언젠가 사라질 운명 이다.
+
+3. inputmode를 설정하는 함수는 3가지가 존재
+  - UWidgetBlueprintLibrary::SetInputMode_UIOnlyEx - 오로지 UI에만 입력이벤트를 전달.
+  - UWidgetBlueprintLibrary::SetInputMode_GameOnly - 오로지 인게임에만 입력이벤트를 전달
+  - UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx - UI와 인게임 모두 전달
+
+4. inputmode를 설정한 상태로 레벨이동을 하면 기존에 설정한 inputmode가 그대로 유지된다. 그러므로 레벨이동후에는 해당 레벨에 맞게끔 inputmode를 다시 설정하는 작업이 필요

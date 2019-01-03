@@ -1,0 +1,4 @@
+1. 라이팅 빌드중에 swarm 에러가 발생하는경우가 있는데 상황별 처리방법이 있는 자료가 있어서 링크남겨둔다.
+  https://wiki.unrealengine.com/Swarm_Agent_Troubleshooting#.22Ran_out_of_Memory.22
+
+2. 추가적으로 레벨 빌드중에 라이팅관련 에러가 발생하는경우 엔진의 lightmess 프로젝트(모듈)만 따로 빌드해도 문제가 해결되는것을 확인. 혹시 레벨빌드중에 라이팅 에러가 발생하면 시도해보자

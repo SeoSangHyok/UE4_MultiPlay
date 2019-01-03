@@ -1,0 +1,19 @@
+1. 네트워크에서 서버에서 실행 함수
+  - 해당 함수는 서버에서 실행된다는 의미
+    -- 클라에서 호출시 해당 명령을 호출한 서버상에서 해당 엑터의 함수가 실행. 클라에선 반응 없음
+    -- 서버에서 실행시 서버에서 바로 실행
+    -- 즉 서버로 요청을 날린다는 개념으로 보면 이해하기 쉽다.
+
+  - 네이티브에서 구현은 해당 함수선언시 UFUNCTION 매크로에 Server와 WithValidation을 추가. 전송보장효과를 누리려면 Reliable를 추가하면 된다.( UFUNCTION(Server, WithValidation, Reliable) )
+    -- 함수 구현은 함수명_Implementation()와 bool 함수명_Validate 두개를 구현해야한다.
+    -- 구현시 최초 원본 함수는 구현할 필요 없다.
+      UFUNCTION(Server, Reliable, WithValidation)
+      void [함수](const FString& Message); // 구현할 필요 없음
+      bool [함수]_Validate(const FString& Message) { return true; } // 구현필요
+      void [함수]_Implementation(const FString& Message);  // 구현필요
+    -- 호출은 함수명으로 사용. 구현함수를 호출할 필요는 없다.
+
+2. 네트워크에서 멀티케스트 함수
+  - 서버뿐만아니라 접속중인 모든 클라이언트에서 실행되는 함수
+  - 네이티브에서 구현은 해당 함수선언시 UFUNCTION 매크로에 NetMulticast 를 추가. 전송보장효과를 누리려면 Reliable를 추가하면 된다.( UFUNCTION(NetMulticast, Reliable) )
+    -- 함수 구현은 함수명_Implementation() 으로 구현

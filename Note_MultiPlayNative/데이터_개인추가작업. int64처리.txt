@@ -1,0 +1,15 @@
+1. int64처리 할때 간혹 컴파일러가 초기화 상수를 int32로 인식하는 경우가 있다. 극단적인 예로
+   int64 = -9223372036854775808; // int64의 범위는 -9223372036854775808 ~ 9223372036854775807 까지
+   위와같이 처리하면 error C4146 가 발생하는 경우가 있는데 이런경우가 위에 설명한 경우다.
+
+2. 이때는 int64 = -9223372036854775808I64 로 상수뒤에[I64]를 붙여서 처리한다.
+
+3. FString::Printf()함수를 이용해서 int64를 문자로 표현할수도 있다.
+  FString::Printf(TEXT("%lld"), MyInt64);
+  FString::Printf(TEXT("%llu"), MyUInt64);
+
+4. 관련링크 남겨둔다.
+  - https://msdn.microsoft.com/ko-kr/library/s3f49ktz.aspx
+  - https://social.msdn.microsoft.com/Forums/vstudio/en-US/4a8772be-4450-40ac-ae7b-d2e079dc44ec/getting-unexpected-values-when-assigning-negative-numbers-to-variables-of-type-int64?forum=vclanguage
+  - http://lab.gamecodi.com/board/zboard.php?id=GAMECODILAB_QnA_etc&no=1878
+  - https://answers.unrealengine.com/questions/548441/how-to-convert-int64-to-fstring-or-tchar-array.html

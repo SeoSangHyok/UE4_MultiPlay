@@ -1,0 +1,7 @@
+1. 케릭터 사망시 렉돌처리를 위해서는 USkeletalMeshComponent::SetSimulatePhysics()에 true 인자를 넘기면 된다.
+
+2. 이때 메시의 collisionEnabled값에 physics 옵션이 켜져있지 않은경우 메시가 충돌처리가 되지않아 밑으로 빠져버리니 주의!
+
+3. 케릭터 기준 랙돌처리시 랙돌처리는 메시만 되는것이고 캡슐컴포넌트의 충돌영처리는 남아있기때문에 해당 컴포넌트의 콜리전도 충돌되지 않도록 세팅하는작업이 필요
+
+4. 추가로 movementcomponent의 SetMovementMode도 MOVE_None으로 설정해서 이동처리도 되지 않도록 설정한다.

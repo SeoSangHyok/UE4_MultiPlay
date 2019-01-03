@@ -1,0 +1,52 @@
+1. Json 은 문자열 형식으로 데이터를 표현할수 있는 언어중 하나
+
+2. 소켓 통신을 할때 이진 파일을 파싱하는 방법도 있지만 Json으로 문자열 처리하면 좀더 직관적으로 표현가능하다고 생각든다.
+
+3. 언리얼에서 Json을 사용하기위해선 build.cs파일에 Json, JsonUtilities 모듈추가가 필요하다.
+
+4. 기본적인 Json사용법(저장/파싱)은 아래 링크를 통해서 확인
+   http://www.wraiyth.com/?p=198
+   http://www.wraiyth.com/?p=222
+
+5. Json을 이용해서 기본 데이터(숫자나 문자)필드를 입력하는건 간단하지만 배열이나 객체정보를 넣는건 TArray<TSharedPtr<FJsonValue>> 형식의 배열을 사용해서 아래와 같이 구현해야한다.
+  TArray<TSharedPtr<FJsonValue>> JsonStrArr; // 정보를 담을 배열을 생성후
+  for (const FString ArrElem : StrArr) // 배열 정보를 돌면서
+  {
+    JsonStrArr.Add(MakeShareable(new FJsonValueString(ArrElem))); // 배열에 추가하고자 하는 값을 넣어주고
+  }
+  JsonObj->SetArrayField(TEXT("[필드명]"), JsonStrArr); // 해당 배열값을 저장
+
+6. json 중첩 오브젝트를 저장/파싱 할때는 아래처럼 사용
+  TSharedPtr<FJsonObject> JsonSubObj = MakeShareable(new FJsonObject()); // 저장할 오브젝트를 생성후
+  if (JsonSubObj.IsValid())
+  {
+    JsonSubObj->SetNumberField(TEXT("X"), ObjVal.X);
+    JsonSubObj->SetNumberField(TEXT("Y"), ObjVal.Y);
+    JsonSubObj->SetNumberField(TEXT("Z"), ObjVal.Z);
+    JsonObj->SetObjectField(TEXT("[하위 객체 필드명]"), JsonSubObj);
+  }
+
+7. Json을 이용해서 단일필드를 넣는것은 코드가 간단하나 배열이나 오브젝트를 넣는것은 코드가 길어져 가독성이 떨어지기때문에 배열이나 프로젝트에 주로 사용되는 오브젝트는
+   따로 핼퍼 함수나 메크로를 만들어서 사용하는게 가독성 면에서 도움이 될듯
+
+8. 처리하면서 참고했던 사이트 링크 남겨둔다.
+   http://orfeasel.com/parsing-json-files/
+   https://answers.unrealengine.com/questions/821768/create-array-of-array-json.html?sort=oldest
+   https://forums.unrealengine.com/development-discussion/c-gameplay-programming/18014-best-way-to-handle-json
+   http://egloos.zum.com/pgrblues/v/4394500
+
+9. 언리얼 Json에는 int64/uint64용 처리클래스가 없다. 약간 우회적으로 처리한다면 JsonObject에 int64와 int32배열을 union으로 묶어 처리하는것이 가능
+  struct I64Struct
+  {
+    union
+    {
+      int64 Val = 0;
+      int32 ValueForSerialize[2];
+    };
+  } I64StructVal;
+
+  // 아래처럼 처리하면 Val과 ValueForSerialize배열은 같은 메모리 공간을 사용하므로 int32로쪼개서 int64 표현이 가능해진다.
+  I64StructVal.Val = [int64Val];
+  TSharedPtr<FJsonObject> JsonInt64Obj = MakeShareable(new FJsonObject());
+  JsonInt64Obj->SetNumberField(TEXT("I64JsonStruct.ValueForSerialize_1"), I64StructVal.ValueForSerialize[0]);
+  JsonInt64Obj->SetNumberField(TEXT("I64JsonStruct.ValueForSerialize_2"), I64StructVal.ValueForSerialize[1]);

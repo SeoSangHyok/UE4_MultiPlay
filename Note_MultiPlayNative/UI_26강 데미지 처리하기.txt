@@ -1,0 +1,5 @@
+1. UWidgetComponent로 3d상에 위젯을 붙이는것이 가능.
+
+2. UWidgetComponent로::SetDrawAtDesiredSize 함수로 위젯에 autosize 처리처럼 위젯영역을 잡는것이 가능. 비슷하게 SetPivot 함수로 pivot 세팅도 가능하니 참고
+
+3. SetWidgetSpace 함수는 위젯을 3d영역처럼 뿌릴것인지 화면2d공간에 출력할것인지를 세팅할수 있다.
